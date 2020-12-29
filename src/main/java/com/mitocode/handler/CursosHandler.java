@@ -1,28 +1,27 @@
 package com.mitocode.handler;
 
+import static org.springframework.web.reactive.function.BodyInserters.fromValue;
+
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-
-import com.mitocode.model.Estudiante;
-import com.mitocode.service.IEstudianteService;
+import com.mitocode.model.Curso;
+import com.mitocode.service.ICursoService;
 import com.mitocode.validators.RequestValidator;
 
-
 import reactor.core.publisher.Mono;
-import static org.springframework.web.reactive.function.BodyInserters.fromValue;
-
-import java.net.URI;
 
 
 @Component 
 public class CursosHandler {
 
 	@Autowired
-	private IEstudianteService service;
+	private ICursoService service;
 	
 
 	
@@ -33,7 +32,7 @@ public class CursosHandler {
 		return ServerResponse
 				.ok()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(service.listar(), Estudiante.class);
+				.body(service.listar(), Curso.class);
 	}
 	
 	public Mono<ServerResponse> listarPorId(ServerRequest req){
@@ -49,7 +48,7 @@ public class CursosHandler {
 	
 	
 	public Mono<ServerResponse> registrar(ServerRequest req){
-		Mono<Estudiante> monoCliente = req.bodyToMono(Estudiante.class);	
+		Mono<Curso> monoCliente = req.bodyToMono(Curso.class);	
 		
 		return monoCliente
 				.flatMap(validatorGeneral::validate)
@@ -61,16 +60,15 @@ public class CursosHandler {
 		
 	}
 	public Mono<ServerResponse> modificar(ServerRequest req){
-		Mono<Estudiante> monoCliente = req.bodyToMono(Estudiante.class);	
-		Mono<Estudiante> monoBD = service.listarPorId(req.pathVariable("id"));
+		Mono<Curso> monoCliente = req.bodyToMono(Curso.class);	
+		Mono<Curso> monoBD = service.listarPorId(req.pathVariable("id"));
 		
 		return monoBD
-				.zipWith(monoCliente, (bd, p) -> {
-					bd.setId(p.getId());
-					bd.setNombres(p.getNombres());
-					bd.setApellidos(p.getApellidos());
-					bd.setDni(p.getDni());
-					bd.setEdad(p.getEdad());
+				.zipWith(monoCliente, (bd, c) -> {
+					bd.setId(c.getId());
+					bd.setNombre(c.getNombre());
+					bd.setSiglas(c.getSiglas());
+					bd.setEstado(c.getEstado());
 					return bd;
 				})
 				

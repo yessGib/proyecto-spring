@@ -1,28 +1,27 @@
 package com.mitocode.handler;
 
+import static org.springframework.web.reactive.function.BodyInserters.fromValue;
+
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-
-import com.mitocode.model.Estudiante;
-import com.mitocode.service.IEstudianteService;
+import com.mitocode.model.Matricula;
+import com.mitocode.service.IMatriculaService;
 import com.mitocode.validators.RequestValidator;
 
-
 import reactor.core.publisher.Mono;
-import static org.springframework.web.reactive.function.BodyInserters.fromValue;
-
-import java.net.URI;
 
 
 @Component 
 public class MatriculaHandler {
 
 	@Autowired
-	private IEstudianteService service;
+	private IMatriculaService service;
 	
 	@Autowired
 	private RequestValidator validatorGeneral;
@@ -31,7 +30,7 @@ public class MatriculaHandler {
 		return ServerResponse
 				.ok()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(service.listar(), Estudiante.class);
+				.body(service.listar(), Matricula.class);
 	}
 	
 	public Mono<ServerResponse> listarPorId(ServerRequest req){
@@ -46,7 +45,7 @@ public class MatriculaHandler {
 	}
 
 	public Mono<ServerResponse> registrar(ServerRequest req){
-		Mono<Estudiante> monoCliente = req.bodyToMono(Estudiante.class);	
+		Mono<Matricula> monoCliente = req.bodyToMono(Matricula.class);	
 	
 		return monoCliente
 				.flatMap(validatorGeneral::validate)
@@ -58,16 +57,15 @@ public class MatriculaHandler {
 		
 	}
 	public Mono<ServerResponse> modificar(ServerRequest req){
-		Mono<Estudiante> monoCliente = req.bodyToMono(Estudiante.class);	
-		Mono<Estudiante> monoBD = service.listarPorId(req.pathVariable("id"));
+		Mono<Matricula> monoCliente = req.bodyToMono(Matricula.class);	
+		Mono<Matricula> monoBD = service.listarPorId(req.pathVariable("id"));
 		
 		return monoBD
-				.zipWith(monoCliente, (bd, p) -> {
-					bd.setId(p.getId());
-					bd.setNombres(p.getNombres());
-					bd.setApellidos(p.getApellidos());
-					bd.setDni(p.getDni());
-					bd.setEdad(p.getEdad());
+				.zipWith(monoCliente, (bd, m) -> {
+					bd.setId(m.getId());
+					bd.setEstudiante(m.getEstudiante());
+					bd.setItems(m.getItems());
+					bd.setEstado(m.getEstado());
 					return bd;
 				})
 				
