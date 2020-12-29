@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import reactor.core.publisher.Mono;
 
-//Clase S5
+
 @Component
 public class AuthenticationManager implements ReactiveAuthenticationManager{
 

@@ -23,7 +23,7 @@ public class RequestValidator {
 			return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST));
 		}
 		
-		Set<ConstraintViolation<T>> violations = this.validator.validate(obj); //Set para que no se repitan los objetos, pudo ser list pero mejor set 
+		Set<ConstraintViolation<T>> violations = this.validator.validate(obj);  
 		
 		if (violations == null || violations.isEmpty()) {
 			return Mono.just(obj);

@@ -4,15 +4,16 @@ import java.time.LocalDate;
 
 public class FiltroDTO {
 
-	private String idCliente;
+	private String idEstudiante;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
 	
-	public String getIdCliente() {
-		return idCliente;
+	
+	public String getIdEstudiante() {
+		return idEstudiante;
 	}
-	public void setIdCliente(String idCliente) {
-		this.idCliente = idCliente;
+	public void setIdEstudiante(String idEstudiante) {
+		this.idEstudiante = idEstudiante;
 	}
 	public LocalDate getFechaInicio() {
 		return fechaInicio;

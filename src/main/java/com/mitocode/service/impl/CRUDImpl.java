@@ -1,13 +1,12 @@
 package com.mitocode.service.impl;
 
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
-import com.mitocode.pagination.PageSupport;
 import com.mitocode.repo.IGenericRepo;
-import com.mitocode.repo.IPlatoRepo;
 import com.mitocode.service.ICRUD;
 
 import reactor.core.publisher.Flux;
@@ -42,23 +41,5 @@ public abstract class CRUDImpl<T,ID> implements ICRUD<T, ID> {
 		return getRepo().deleteById(id);
 	}
 	
-	public Mono<PageSupport<T>> listarPage(Pageable page) {
-		// mongo es commo si se ejecutara la siguiente: db.getCollection('platos').find().skip(1).limit(2)  // skip es de donde comienza y limit cuantos quiero ver 
-		return getRepo().findAll()  //devuelve flux
-				.collectList()		//devuelve los elementos de findAll como un mono
-				.map(list -> new PageSupport<>(
-						list												//content
-						.stream()
-						.skip(page.getPageNumber() * page.getPageSize())
-						.limit(page.getPageSize())
-						.collect(Collectors.toList())
-						,
-						page.getPageNumber()								//pageNumber
-						,
-						page.getPageSize()									//pageSize
-						,
-						list.size()											 //totalElements
-						));
-		
-	}
+	
 }

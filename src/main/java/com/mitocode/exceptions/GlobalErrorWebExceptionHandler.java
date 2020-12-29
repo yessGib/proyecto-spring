@@ -7,13 +7,11 @@ import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.server.RequestPredicate;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -22,8 +20,8 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import reactor.core.publisher.Mono;
 
-@Component  //para clases de apoyo utilitarias
-//@Order(-1)  // en caso de que aún siga intentando entrar en accion el validator de spring y quiera enviar su mensjae de error, le diremos que priorice lo que indica esta clase
+@Component  
+//@Order(-1) 
 public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler{
 
 	public GlobalErrorWebExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties,
@@ -41,7 +39,7 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
 	private Mono<ServerResponse> renderErrorResponse(ServerRequest request){
 		Map<String, Object> errorGeneral = getErrorAttributes(request, false);
 		Map<String, Object> mapException = new HashMap<>();
-		var httpStatus = HttpStatus.INTERNAL_SERVER_ERROR; // con var se ke dice que infiera el tipo de variable
+		var httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		String statusCode = String.valueOf(errorGeneral.get("status"));
 		switch (statusCode) {
 		case "500":

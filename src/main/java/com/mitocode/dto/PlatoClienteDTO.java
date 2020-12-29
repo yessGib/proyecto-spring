@@ -1,29 +1,29 @@
 package com.mitocode.dto;
 
-import com.mitocode.model.Cliente;
-import com.mitocode.model.Plato;
+import com.mitocode.model.Estudiante;
+import com.mitocode.model.Curso;
 
 public class PlatoClienteDTO {
 	
-	private Cliente cliente;
-	private Plato plato;
+	private Estudiante estudiante;
+	private Curso curso;
 	
-	public PlatoClienteDTO(Cliente cliente, Plato plato) {
+	public PlatoClienteDTO(Estudiante estudiante, Curso curso) {
 		super();
-		this.cliente = cliente;
-		this.plato = plato;
+		this.estudiante = estudiante;
+		this.curso = curso;
 	}
-	public Cliente getCliente() {
-		return cliente;
+	public Estudiante getCliente() {
+		return estudiante;
 	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setCliente(Estudiante estudiante) {
+		this.estudiante = estudiante;
 	}
-	public Plato getPlato() {
-		return plato;
+	public Curso getPlato() {
+		return curso;
 	}
-	public void setPlato(Plato plato) {
-		this.plato = plato;
+	public void setPlato(Curso curso) {
+		this.curso = curso;
 	}
 	
 	

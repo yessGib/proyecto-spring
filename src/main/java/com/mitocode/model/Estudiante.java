@@ -1,19 +1,16 @@
 package com.mitocode.model;
 
-import java.time.LocalDate;
-
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Document(collection = "clientes")
-public class Cliente {
+@Document(collection = "estudiantes")
+public class Estudiante {
 	@Id
 	private String id;
 
@@ -24,13 +21,12 @@ public class Cliente {
 	@Field(name = "apellidos")
 	private String apellidos;
 	
-	@Field(name = "fechaNac")
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private LocalDate fechaNac;
+	@Field(name = "dni")
+	private String dni;
 	
-	@Field(name = "urlFoto")
-	private String urlFoto;
-
+	@Field(name = "edad")
+	private int edad;
+	
 	public String getId() {
 		return id;
 	}
@@ -55,21 +51,20 @@ public class Cliente {
 		this.apellidos = apellidos;
 	}
 
-	public LocalDate getFechaNac() {
-		return fechaNac;
+	public String getDni() {
+		return dni;
 	}
 
-	public void setFechaNac(LocalDate fechaNac) {
-		this.fechaNac = fechaNac;
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
-	public String getUrlFoto() {
-		return urlFoto;
+	public int getEdad() {
+		return edad;
 	}
 
-	public void setUrlFoto(String urlFoto) {
-		this.urlFoto = urlFoto;
+	public void setEdad(int edad) {
+		this.edad = edad;
 	}
-	
 	
 }

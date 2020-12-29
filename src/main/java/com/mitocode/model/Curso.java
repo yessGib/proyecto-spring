@@ -9,28 +9,35 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-//@Entity y @Table se usan para bases de datos relacionales
-//@Document // lo que @Document hará será buscar el plural de esa clase en la base de datos
-//para indicarle la relación en la base de datos:
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Document(collection = "platos")
-public class Plato {
- //esta es la representación de un documento
+@Document(collection = "cursos")
+public class Curso {
+	
 	@Id
 	private String id;
-	// para bases de dtos relacionales @Column(name = "nomre", ... etc)
+	
 	@NotEmpty
-	@Field(name = "nombre") // es opcional, si no se pone asumirá el nombre del aributo en la base 
+	@Field(name = "nombre")
 	private String nombre;
 	
 	
-	@Field(name = "precio")
-	private Double precio;
+	@Field(name = "siglas")
+	private String siglas;
 	
-	@NotNull  //es un requerido
+	@NotNull
 	@Field(name = "estado")
 	private Boolean estado;
 	
+	public Curso() {};
+	
+	public Curso(String id, @NotEmpty String nombre, String siglas, @NotNull Boolean estado) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.siglas = siglas;
+		this.estado = estado;
+	}
 	public String getId() {
 		return id;
 	}
@@ -48,16 +55,19 @@ public class Plato {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}	
+	
+	public String getSiglas() {
+		return siglas;
 	}
-	public Double getPrecio() {
-		return precio;
+
+	public void setSiglas(String siglas) {
+		this.siglas = siglas;
 	}
-	public void setPrecio(Double precio) {
-		this.precio = precio;
-	}
+
 	@Override
 	public String toString() {
-		return "Plato [id=" + id + "]";
+		return "Curso [id=" + id + "]";
 	}
 	
 	
